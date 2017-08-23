@@ -43,8 +43,10 @@
     
 //    创建画布并设置画布宽高
     var canvas=document.getElementById('myCanvas');
-    var C_width =(document.documentElement.clientWidth)*(0.95);
-    var C_height =(document.documentElement.clientHeight)*(0.95);
+//    var C_width =(document.documentElement.clientWidth)*(0.95);
+//    var C_height =(document.documentElement.clientHeight)*(0.95);
+    var C_width =800;
+    var C_height =500;
     canvas.width = C_width;
     canvas.height = C_height;
     var context = canvas.getContext('2d');
@@ -60,6 +62,7 @@
         },1000/FPS),
         move:setInterval(function(){
             if(state.run_up==true){
+                state.map_y=state.map_y+6.25;
                 state.npc1_dire=3;
                 if(state.npc1_state<3){
                     state.npc1_state++;
@@ -68,6 +71,7 @@
                 }                
             }
             if(state.run_down==true){
+                state.map_y=state.map_y-6.25;
                 state.npc1_dire=0;
                 if(state.npc1_state<3){
                     state.npc1_state++; 
@@ -76,6 +80,7 @@
                 }                
             }
             if(state.run_left==true){
+                state.map_x=state.map_x+6.25;
                 state.npc1_dire=1;
                 if(state.npc1_state<3){
                     state.npc1_state++;
@@ -84,6 +89,7 @@
                 }                
             }
             if(state.run_right==true){
+                state.map_x=state.map_x-6.25;
                 state.npc1_dire=2;
                 if(state.npc1_state<3){
                     state.npc1_state++;
@@ -104,6 +110,9 @@
         run_right:false,
         npc1_dire:0,
         npc1_state:0,
+//        地图偏移量
+        map_x:0,
+        map_y:0,
     }
 //    数据加载侦听
     window.onload=function(){
@@ -132,24 +141,26 @@
                 default:break;
             }
         }           
-    }    
+    }  
+    
 //    绘制地图
     function draw_map(x_map,y_map){  
         var x_map=x_map||0;
         var y_map=y_map||0;
-        for(var i=0;i<15;i++){
-            for(var y=0;y<10;y++){
-                context.drawImage(image.background[maps.bg[i][y]],(i*50),(y*50));
+        for(var i=0;i<40;i++){
+            for(var y=0;y<40;y++){
+                context.drawImage(image.background[maps.bg[i][y]],(i*50)+state.map_x,(y*50)+state.map_y);
             }        
         }
-        for(var i=0;i<15;i++){
-            for(var y=0;y<10;y++){
+        for(var i=0;i<40;i++){
+            for(var y=0;y<40;y++){
                 if(maps.decorate[i][y]>=100){
-                context.drawImage(image.background[maps.decorate[i][y]],(i*50),(y*50));
+                context.drawImage(image.background[maps.decorate[i][y]],(i*50)+state.map_x,(y*50)+state.map_y);
                 }
             }        
         }        
     }
+    
 //    绘制npc
     function draw_npc(){
         if(state.Stand==true){

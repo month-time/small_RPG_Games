@@ -63,7 +63,7 @@
         },1000/FPS),
         move:setInterval(function(){
             if(state.run_up==true){
-                state.map_y=state.map_y+6.25;
+                state.map_y=state.map_y+4.25;
                 state.npc1_dire=3;
                 if(state.npc1_state<3){
                     state.npc1_state++;
@@ -72,7 +72,7 @@
                 }                
             }
             if(state.run_down==true){
-                state.map_y=state.map_y-6.25;
+                state.map_y=state.map_y-4.25;
                 state.npc1_dire=0;
                 if(state.npc1_state<3){
                     state.npc1_state++; 
@@ -81,7 +81,7 @@
                 }                
             }
             if(state.run_left==true){
-                state.map_x=state.map_x+6.25;
+                state.map_x=state.map_x+4.25;
                 state.npc1_dire=1;
                 if(state.npc1_state<3){
                     state.npc1_state++;
@@ -90,7 +90,7 @@
                 }                
             }
             if(state.run_right==true){
-                state.map_x=state.map_x-6.25;
+                state.map_x=state.map_x-4.25;
                 state.npc1_dire=2;
                 if(state.npc1_state<3){
                     state.npc1_state++;

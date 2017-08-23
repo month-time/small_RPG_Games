@@ -40,7 +40,7 @@
     
     
 //    定义地图变量
-    var maps;
+//    var maps;
     
 //    创建画布并设置画布宽高
     var canvas=document.getElementById('myCanvas');
@@ -114,17 +114,24 @@
     var state={
         image_load:false,
         map_load:false,
+//        步行和跑动判断
         Stand:false,
+//        运动方向
         run_up:false,
         run_down:false,
         run_left:false,
         run_right:false,
+//        npc朝向
         npc1_dire:0,
+//        npc运动状态
         npc1_state:0,
 //        地图偏移量
         map_x:0,
         map_y:0,
+//        地图偏移速率
         map_speed:1.5,
+//        地图数据
+        maps:{},
     }
 //    数据加载侦听
     window.onload=function(){
@@ -161,13 +168,13 @@
         var y_map=y_map||0;
         for(var i=0;i<40;i++){
             for(var y=0;y<40;y++){
-                context.drawImage(image.background[maps.bg[i][y]],(i*50)+state.map_x,(y*50)+state.map_y);
+                context.drawImage(image.background[state.maps.bg[i][y]],(i*50)+state.map_x,(y*50)+state.map_y);
             }        
         }
         for(var i=0;i<40;i++){
             for(var y=0;y<40;y++){
-                if(maps.decorate[i][y]>=100){
-                context.drawImage(image.background[maps.decorate[i][y]],(i*50)+state.map_x,(y*50)+state.map_y);
+                if(state.maps.decorate[i][y]>=100){
+                context.drawImage(image.background[state.maps.decorate[i][y]],(i*50)+state.map_x,(y*50)+state.map_y);
                 }
             }        
         }        
@@ -201,7 +208,7 @@
            {            
                 data=xmlhttp.responseText;               
                 data=JSON.parse(data);
-                maps=data;
+                state.maps=data;
                 map_load=true;
             }
 	   }

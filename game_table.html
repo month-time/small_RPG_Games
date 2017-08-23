@@ -61,9 +61,8 @@
                 draw_npc();
             }                
         },1000/FPS),
-        move:setInterval(function(){
+        npc_move:setInterval(function(){
             if(state.run_up==true){
-                state.map_y=state.map_y+4.25;
                 state.npc1_dire=3;
                 if(state.npc1_state<3){
                     state.npc1_state++;
@@ -72,7 +71,6 @@
                 }                
             }
             if(state.run_down==true){
-                state.map_y=state.map_y-4.25;
                 state.npc1_dire=0;
                 if(state.npc1_state<3){
                     state.npc1_state++; 
@@ -81,7 +79,6 @@
                 }                
             }
             if(state.run_left==true){
-                state.map_x=state.map_x+4.25;
                 state.npc1_dire=1;
                 if(state.npc1_state<3){
                     state.npc1_state++;
@@ -90,7 +87,6 @@
                 }                
             }
             if(state.run_right==true){
-                state.map_x=state.map_x-4.25;
                 state.npc1_dire=2;
                 if(state.npc1_state<3){
                     state.npc1_state++;
@@ -99,6 +95,20 @@
                 }                
             }
         },125),
+        map_move:setInterval(function(){
+            if(state.run_up==true){
+                state.map_y=state.map_y+state.map_speed;
+            }
+            if(state.run_down==true){
+                state.map_y=state.map_y-state.map_speed;
+            }
+            if(state.run_left==true){
+                state.map_x=state.map_x+state.map_speed;
+            }
+            if(state.run_right==true){
+                state.map_x=state.map_x-state.map_speed;
+            }
+        },1000/FPS),
     }    
 //    状态组
     var state={
@@ -114,6 +124,7 @@
 //        地图偏移量
         map_x:0,
         map_y:0,
+        map_speed:1.5,
     }
 //    数据加载侦听
     window.onload=function(){

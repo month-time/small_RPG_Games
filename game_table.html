@@ -29,11 +29,15 @@
     image.npc[1].src="./img/角色行走图.png";
     image.background[0]=new Image();
     image.background[1]=new Image();
+    image.background[50]=new Image();
+    image.background[51]=new Image();
     image.background[100]=new Image();
     image.background[101]=new Image();
     image.background[102]=new Image();
     image.background[0].src="./img/001草地.png";
     image.background[1].src="./img/002地砖.png";
+    image.background[50].src="./img/镜头阴影.png";
+//    image.background[51].src="./img/镜头阴影1.png";
     image.background[100].src="./img/100红树.png";
     image.background[101].src="./img/101绿树.png";
     image.background[102].src="./img/102高绿树.png";
@@ -80,6 +84,7 @@
             if(state.image_load==true&&map_load==true){
                 draw_map();
                 draw_npc();
+                draw_camera();
             }                
         },1000/FPS),
 //        人物状态判断线程
@@ -210,8 +215,13 @@
             context.drawImage(image.npc[1],(state.npc1_state*96),(state.npc1_dire*96),100,100,state.npc1_x,state.npc1_y,50,50);
         }
     }
+    function draw_camera(){
+//        context.drawImage(image.background[51],0,0,C_width,C_height);
+        context.drawImage(image.background[50],0,0,C_width,C_height);        
+    }
+    
     function npc_run(action){
-
+         
     }
     
 //    ajax读取地图数据

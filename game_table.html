@@ -78,6 +78,7 @@
         map_speed:1.5,
 //        地图数据
         maps:{},
+        talkpal:false,
     }
 //    线程组
     var time={
@@ -287,6 +288,9 @@
                     click.x=parseInt((state.npc1_x-state.map_x+25)/50);
                     click.y=parseInt((state.npc1_y-state.map_y)/50);
                     if(state.maps.npc[click.y+1][click.x]>=300){
+                        if(state.talkpal==true){
+
+                        }
                         alert("下方事件");
                     }
                     break;

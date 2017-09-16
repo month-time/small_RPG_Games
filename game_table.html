@@ -86,7 +86,7 @@
 //        画面绘制
         draw:setInterval(function(){
             context.clearRect(0,0,C_width,C_height);
-            if(state.image_load==true&&map_load==true){
+            if(state.image_load==true&&state.map_load==true){
                 draw_map();
                 draw_npc();
                 draw_camera();
@@ -352,7 +352,7 @@
                 data=xmlhttp.responseText;
                 data=JSON.parse(data);
                 state.maps=data;
-                map_load=true;
+                state.map_load=true;
             }
 	   }
     }

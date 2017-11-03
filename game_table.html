@@ -6,15 +6,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-
 <title>New HMTL document by NewJect</title>
+<style>
+    *{padding: 0;margin:0 ;}
+    body{display: flex;justify-content: center;align-items:center;overflow: hidden;}
+    #myCanvas{display: block;}
+</style>
 </head>
 <body>
-<div>
-    <canvas id="myCanvas" width="" height="">
+    <canvas id="myCanvas">
       your browser doesn't support canvas!
     </canvas>
-</div>
 <script>
     var FPS=60;
 //    预载贴图
@@ -47,10 +49,10 @@
 
 //    创建画布并设置画布宽高
     var canvas=document.getElementById('myCanvas');
-//    var C_width =(document.documentElement.clientWidth)*(0.95);
-//    var C_height =(document.documentElement.clientHeight)*(0.95);
-    var C_width =800;
-    var C_height =500;
+    var C_width =(document.documentElement.clientWidth)*(0.95);
+    var C_height =(document.documentElement.clientHeight)*(0.95);
+//    var C_width =800;
+//    var C_height =500;
     canvas.width = C_width;
     canvas.height = C_height;
     var context = canvas.getContext('2d');
@@ -216,6 +218,10 @@
                 default:break;
             }
         }
+//        绑定移动端 滑屏移动事件绑定
+        document.querySelector("#myCanvas").addEventListener("touchstart",Slide.sEvent);
+        document.querySelector("#myCanvas").addEventListener("touchmove",Slide.sEvent);
+        document.querySelector("#myCanvas").addEventListener("touchend",Slide.sEvent);
         canvas.onmousedown=function(e){
         var e=e||window.Event;
         var rect = canvas.getBoundingClientRect();
@@ -231,6 +237,50 @@
         console.log(map);
     }
     }
+    var Slide={
+        X:0,
+        Y:0,
+        oud_X:0,
+        oud_Y:0,
+        sEvent:function(){
+            var e=event;
+            event.preventDefault();
+            var callback=callback||function(){alert(12);};
+            switch(e.type){
+                case "touchstart":
+                    Slide.X=e.touches[0].screenX;
+                    Slide.Y=e.touches[0].screenY;
+                    break;
+//                    当触控移动距离超过50像素时启动运动脚本
+                case "touchmove":
+                    Slide.oud_X=Slide.X-e.changedTouches[0].screenX;
+                    Slide.oud_Y=Slide.Y-e.changedTouches[0].screenY;
+                    if(Slide.oud_X>50){
+                        state.run_right=false;
+                       state.Stand=false;state.run_left=true;
+                    }else if(Slide.oud_X<-50){
+                        state.run_left=false;
+                       state.Stand=false;state.run_right=true;
+                    }
+                    if(Slide.oud_Y>50){
+                        state.run_down=false;
+                       state.Stand=false;state.run_up=true;
+                    }else if(Slide.oud_Y<-50){
+                        state.run_up=false;
+                        state.Stand=false;state.run_down=true;
+                    }
+                    break;
+                case "touchend":
+                    Slide.X=Slide.X-e.changedTouches[0].screenX;
+                    Slide.Y=Slide.Y-e.changedTouches[0].screenY;
+                    state.Stand=true;state.run_up=false;
+                    state.Stand=true;state.run_down=false;
+                    state.Stand=true;state.run_left=false;
+                    state.Stand=true;state.run_right=false;
+                    break;
+            }
+        },
+    };
 //    绘制地图,碰撞层,事件层,npc
     function draw_map(x_map,y_map){
         var x_map=x_map||0;
